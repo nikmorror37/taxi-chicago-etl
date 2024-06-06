@@ -12,10 +12,16 @@ CREATE TABLE [stageProjectIDH].[Company] (
 );
 
 CREATE TABLE [stageProjectIDH].[CensusTract] (
-    [ID_CensusTractT] [BIGINT] PRIMARY KEY,
-    [IdentifierCensusTract] [BIGINT] NULL,
+    [ID_CensusTractT] [INT] PRIMARY KEY,
+    [IdentifierCensusTract] [INT] NULL
+);
+
+CREATE TABLE [stageProjectIDH].[CentroidLocation] (
+    [ID_CentroidLocationT] [INT] PRIMARY KEY,
+    [IdentifierCentroidLocation] [INT] NULL,
     [Latitude] [DECIMAL](9, 6) NULL,
-    [Longitude] [DECIMAL](9, 6) NULL
+    [Longitude] [DECIMAL](9, 6) NULL,
+    [Location] [GEOGRAPHY] NULL
 );
 
 CREATE TABLE [stageProjectIDH].[CommunityArea] (
@@ -30,6 +36,7 @@ CREATE TABLE [stageProjectIDH].[PaymentType] (
 
 CREATE TABLE [stageProjectIDH].[TimestampT] (
     [ID_TimestampT] [INT] PRIMARY KEY,
+    [Timestamp] [DATETIME] NULL,
     [Year] [INT] NULL,
     [Month] [INT] NULL,
     [Day] [INT] NULL,
@@ -46,10 +53,12 @@ CREATE TABLE [stageProjectIDH].[Trip] (
     [EndTimestampID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].TimestampT(ID_TimestampT),
     [ID_PaymentType] [INT] FOREIGN KEY REFERENCES [stageProjectIDH].PaymentType(ID_PaymentTypeT),
     [ID_Company] [INT] FOREIGN KEY REFERENCES [stageProjectIDH].Company(ID_CompanyT),
-    [PickupCensusTractID] [BIGINT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CensusTract(ID_CensusTractT),
-    [DropoffCensusTractID] [BIGINT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CensusTract(ID_CensusTractT),
+    [PickupCensusTractID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CensusTract(ID_CensusTractT),
+    [DropoffCensusTractID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CensusTract(ID_CensusTractT),
     [PickupCommunityAreaID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CommunityArea(ID_CommunityAreaT),
     [DropoffCommunityAreaID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CommunityArea(ID_CommunityAreaT),
+    [PickupCentroidLocationID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CentroidLocation(ID_CentroidLocationT),
+    [DropoffCentroidLocationID] [INT] NULL FOREIGN KEY REFERENCES [stageProjectIDH].CentroidLocation(ID_CentroidLocationT),
     [Seconds] [INT] NULL,
     [Miles] [DECIMAL](10, 2) NULL,
     [Fares] [DECIMAL](10, 2) NULL,
